@@ -7,8 +7,17 @@
 //
 
 #import "MainViewController.h"
+#import "ArrayDataSource.h"
+#import "HS_Cell.h"
+#import "HS_Cell+ConfigureForPhoto.h"
+#import "Photo.h"
 
-@interface MainViewController ()
+static NSString * const PhotoCellIdentifier = @"LTMyCell";
+
+@interface MainViewController ()<UITableViewDelegate>
+
+@property (nonatomic, strong) ArrayDataSource *photosArrayDataSource;
+@property (nonatomic, strong)UITableView *mainTableView;
 
 @end
 
@@ -17,7 +26,59 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.mainTableView.backgroundColor = [UIColor clearColor];
+    
+    [self setupTableView];
+    
 }
+
+
+- (void)setupTableView
+{
+    Photo *p = [[Photo alloc]init];
+    
+    NSMutableArray *photos = [p readModel];
+    
+    TableViewCellConfigureBlock configureCell = ^(HS_Cell *cell, Photo *photo) {
+        [cell configureForPhoto:photo];
+    };
+    
+    self.photosArrayDataSource = [[ArrayDataSource alloc] initWithItems:photos
+                                                         cellIdentifier:PhotoCellIdentifier
+                                                     configureCellBlock:configureCell];
+    
+    self.mainTableView.dataSource = self.photosArrayDataSource;
+    
+    [self.mainTableView registerNib:[HS_Cell nib] forCellReuseIdentifier:PhotoCellIdentifier];
+    
+}
+
+#pragma mark UITableViewDelegate
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSLog(@"Click!");
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 95;
+}
+
+- (UITableView *)mainTableView
+{
+    if (!_mainTableView)
+    {
+        CGRect rect = CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height);
+        self.mainTableView = [[UITableView alloc]initWithFrame:rect style:UITableViewStylePlain];
+        self.mainTableView.delegate = self;
+        [self.view addSubview:self.mainTableView];
+    }
+    return _mainTableView;
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

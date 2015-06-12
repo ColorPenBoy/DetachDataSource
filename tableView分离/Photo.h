@@ -10,4 +10,10 @@
 
 @interface Photo : NSObject
 
+@property (nonatomic, strong) NSString* ghid;
+@property (nonatomic, strong) NSString* imageUrl;
+
+- (NSMutableArray *)readModel;
+
+
 @end

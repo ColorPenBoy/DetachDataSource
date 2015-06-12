@@ -10,14 +10,12 @@
 
 @implementation HS_Cell
 
-- (void)awakeFromNib {
-    // Initialization code
+
++ (UINib *)nib
+{
+    return [UINib nibWithNibName:@"HS_Cell" bundle:nil];
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
 
-    // Configure the view for the selected state
-}
 
 @end

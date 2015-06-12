@@ -7,7 +7,17 @@
 //
 
 #import "HS_Cell+ConfigureForPhoto.h"
+#import "Photo.h"
+#import "UIImageView+WebCache.h"
 
 @implementation HS_Cell (ConfigureForPhoto)
+
+
+//为UITableViewCell布局
+- (void)configureForPhoto:(Photo *)photo
+{
+    self.photoTitleLabel.text = photo.ghid;
+    [self.titleImage sd_setImageWithURL:[NSURL URLWithString:photo.imageUrl]];
+}
 
 @end

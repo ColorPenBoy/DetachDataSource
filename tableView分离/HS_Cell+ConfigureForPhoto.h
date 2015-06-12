@@ -8,6 +8,10 @@
 
 #import "HS_Cell.h"
 
+@class Photo;
+
 @interface HS_Cell (ConfigureForPhoto)
+
+- (void)configureForPhoto:(Photo *)photo;
 
 @end

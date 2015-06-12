@@ -10,4 +10,11 @@
 
 @interface HS_Cell : UITableViewCell
 
++ (UINib *)nib;
+
+@property (weak, nonatomic) IBOutlet UILabel *photoTitleLabel;
+
+@property (weak, nonatomic) IBOutlet UIImageView *titleImage;
+
+
 @end
